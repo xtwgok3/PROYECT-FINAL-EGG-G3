@@ -1,0 +1,27 @@
+<form class="row g-3" th:action="@{/registrar-cliente}" method="POST" enctype="multipart/form-data">
+    <div class="col-md-6">
+        <label for="inputEmail4" class="form-label">Cliente Email</label>
+        <input name="email" th:value="${session.usuariosession.email}" type="email" class="form-control" id="inputEmail4" placeholder="Ej: cliente@mail.com" required>
+    </div>
+    <div class="col-md-6">
+        <label for="telefono" class="form-label">Cliente Telefono</label>
+        <input name="telefono" th:value="${session.usuariosession.telefono}" type="text" class="form-control" id="telefono" placeholder="Ej: 1234562233 " required>
+    </div>
+    <div class="col-md-6">
+        <label for="nombre" class="form-label">Cliente Nombre</label>
+        <input name="nombre" th:value="${session.usuariosession.nombre}" type="text" class="form-control" id="nombre" placeholder="Ej: Juan " required>
+    </div>
+    <div class="col-md-6">
+        <label for="apellido" class="form-label">Cliente Apellido</label>
+        <input name="apellido" th:value="${session.usuariosession.apellido}" type="text" class="form-control" id="apellido" placeholder="Ej: Perez " required>
+    </div>
+    <div class="col-12">
+        <label for="direccion" class="form-label">Cliente Direccion</label>
+        <input name="direccion" th:value="${session.usuariosession.direccion}" type="text" class="form-control" id="direccion" placeholder="Ej: Calle 123 Piso 1-E " required>
+    </div>
+
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Contratar</button>
+    </div>
+</form>

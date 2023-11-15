@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<div th:replace="/fragments/head :: head"></div>
+<title>Home</title>
+</head>
+
+<style th:replace="/fragments/style :: style"></style>
+
+<body style="background-color: #F2F2F2">
+<nav th:replace="/fragments/navbar :: nav" ></nav> 
+
+
+
+    <main>
+            <section class="py-5 text-center container img-fondo">
+                <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis">
+                    <div class="col-lg-6 px-0">
+                        <h1 style="font-weight: 500;" class="display-4 fst-italic">Chacras de Coria</h1>
+                        <p class="lead my-3">Encontra el servicio que deseas contratar en una sola web.</p>
+                        <p class="lead mb-0"><a href="/servicios" class="text-body-emphasis fw-bold">Consulte los servicios aqui!</a></p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="album py-5 ">
+                <div class="container">
+
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                        <div class="col ">
+                           <div class="card tarjeta-index">
+                                <img th:src="@{/images/main/servicios.png}" width="100%" height="225" alt="hospedaje foto"/>
+                                <div class="card-body">
+                                    <h3 class="fw-light">Sobre Nosotros</h3>
+                                    <p th:if="${session.usuariosession==null}" class="card-text">Somos una red de servicios basicos, tratamos de organizarlos y agregarlos en un solo lugar para su comodidad... </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+
+                                             <a style="-webkit-box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.36);
+    -moz-box-shadow: 0px 2px 16px 4px rgba(0,0,0,0.36);" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#ModalNosotros" >
+                                            Ver
+                                        </a>
+                                            
+                                            <!-- Modal descripcion sobre nosotros-->
+                                            <div class="modal fade" id="ModalNosotros" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                 <div class="modal-dialog tarjeta-index">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Servicios Chacras Coria</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Nosotros somos una empresa te ayuda a contratar un servicio de calidad, incluso puedes convertirte en un proveedor brindando tu servicio.
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button style="background-color: #1B2223!important;" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                      
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="col">
+                            <div class="card tarjeta-index">
+                                <img th:src="@{/images/main/registrousuarios.jpg}" width="100%" height="225" alt="hospedaje foto"/>
+                                <div class="card-body">
+                                    <h3 th:if="${session.usuariosession==null}" class="fw-light">Unete como Usuario!</h3>
+                                    <h3 th:if="${session.usuariosession!=null}" class="fw-light">Revisa nuestros Servicio</h3>
+                                    <p th:if="${session.usuariosession==null}"  class="card-text">Unete como Usuario para poder acceder a los servicios prestados por demas usuarios proveedores, califica su trabajo.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+
+                                            <!-- boton cliente registro -->
+                                            <a th:if="${session.usuariosession==null}"  style="-webkit-box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.36);
+    -moz-box-shadow: 0px 2px 16px 4px rgba(0,0,0,0.36);" type= "button" class="btn" th:href="@{/registrar-usuario}" >
+                                                Registrate
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card tarjeta-index">
+                                <img th:src="@{/images/main/servicios-generales2.jpg}" width="100%" height="225" alt="hospedaje foto"/>
+                                <div class="card-body">
+                                    <h3 th:if="${session.usuariosession == null}" class="fw-light">Unete como Proveedor!</h3>
+                                    <h3 th:if="${session.usuariosession != null}" class="fw-light">Contrata un Servicio!</h3>
+                                    
+                                    <p th:if="${session.usuariosession==null}" class="card-text">Unete a nuestra red como Prestador de Servicios!!, conoce tus clientes y expande tu red de trabajo... bla bla bla....</p>
+
+                                    
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+
+                                            <!-- Registro proveedor botton -->
+                                            <a th:if="${session.usuariosession == null}"   style="-webkit-box-shadow: 0px 2px 10px 2px rgba(0,0,0,0.36);
+    -moz-box-shadow: 0px 2px 16px 4px rgba(0,0,0,0.36);" type= "button" class="btn" th:href="@{/registrar-usuario}" >
+                                                Registrate
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+    </main>
+
+        <div class="container">
+            <footer th:replace="/fragments/footer :: footer" > </footer>
+        </div>
+
+</body>
+</html>

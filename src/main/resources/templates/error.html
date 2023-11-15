@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head> 
+    <div th:replace= "/fragments/head :: head"></div>
+    <title>Error</title>
+
+    </head>
+    
+    <style th:replace="/fragments/style :: style"></style>
+    
+
+    <body style="background-color: #F2F2F2">
+
+        <nav th:replace="/fragments/navbar :: nav"></nav>
+        
+        <header style=" background: lightgray;margin-top: 0; margin-left: 0;margin-right: 0;" class="header">
+            <section style="margin-top: auto; margin-left: auto;margin-right: auto;" class="contenedorMain">
+                
+                <div style="text-align: center" class="tituloBiblioteca">
+                    <h1>Manejo de Errores</h1>
+                    <h1 th:unless="${msj}" class="navbar-brand" th:text="'Error ' + ${codigo}"></h1>
+                    <h1 th:if="${msj}" class="navbar-brand" th:text="'Error ' + ${403}"></h1>
+                   
+                    
+                    <p th:unless="${msj}" style="font-size: 40px" class="tituloLibros" th:text="${mensaje}"></p> 
+                    <h1 style="color: darkred" th:if="${msj}"  th:text="'No Tienes Permisos '"></h1>
+                    
+                    
+                </div>
+              
+                
+                <section class="text-center container">
+			<div class="row mt-3">
+				<div class="divVolver">
+				<a th:href="@{/}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+				</div>
+			</div>
+		</section>
+                
+                <div style="text-align: center" th:if="${session.usuariosession != null}" class="container contenedorLibros">
+                    <h2  th:if="${session.usuariosession != null}">
+                        Hola de vuelta »<span class="username-color" th:text=" ${session.usuariosession.email}"></span>« 
+                    </h2>
+                    
+                </div>
+                
+                <div class="bg-circle-1 bg-circle"></div>
+                <div class="bg-circle-2 bg-circle"></div>
+                <div class="bg-circle-3 bg-circle"></div>
+                <div class="bg-circle-4 bg-circle"></div>
+                
+            </section>
+           
+        </header>
+
+</body>
+</html>

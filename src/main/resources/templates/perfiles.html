@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+    <div th:replace="/fragments/head :: head"></div>
+    <title>Perfil</title>
+</head>
+
+<style th:replace="/fragments/style :: style"></style>
+<body style="background-color: #F2F2F2">
+    <nav th:replace="/fragments/navbar :: nav"></nav>
+
+    <br><br>
+
+
+    <div class="container">
+        <div class="card">
+            <div style="background-color: #151D21!important" class="card-header d-flex align-items-center justify-content-evenly bg-danger"><h4 style=" color: #DFE2F2!important" class="fw-bold">Perfil</h4></div>
+            <div class="row g-0">
+                <div class="col-md-4 d-flex">
+
+                    <div th:if="${session.usuariosession != null and session.usuariosession.imagen != null}" class=" d-flex perfil">
+                        <img th:src="@{/imagen/perfil/__${session.usuariosession.id}__}">
+                    </div>
+
+                    <div th:if="${session.usuariosession != null and session.usuariosession.imagen == null}" class=" d-flex perfil">
+                        <img th:src="@{/images/perfil.png}">
+                    </div>
+
+
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+
+                        <table style="border-color: inherit!important;border-style: double!important;" class="table">
+                            <tbody>
+
+                                <tr class="border-top-0 border-end-0 border-start-0 border-3 border-secondary">
+                                    <th th:text="'Nombre: '+ ${session.usuariosession.nombre}" scope="row"></th>
+
+                                </tr>
+                                <tr class="border-top-0 border-end-0 border-start-0 border-3 border-secondary">
+                                    <th th:text="'Apellido: '+ ${session.usuariosession.apellido}" scope="row"></th>
+
+                                </tr>
+                                <tr class="border-top-0 border-end-0 border-start-0 border-3 border-secondary">
+                                    <th th:text="'Telefono: '+ ${session.usuariosession.telefono}" scope="row"></th>
+
+                                </tr>
+                                <tr class="border-top-0 border-end-0 border-start-0 border-3 border-secondary">
+                                    <th th:text="'Email: '+ ${session.usuariosession.email}" scope="row"></th>
+
+                                </tr>
+                                <tr class="border-top-0 border-end-0 border-start-0 border-3 border-secondary">
+                                    <th th:text="'Rol: '+ ${session.usuariosession.rol}" scope="row"></th>
+
+                                </tr>
+
+                                 <!-- MODIFICAR ALTA -->
+                                <tr class="border-top-0 border-end-0 border-start-0 border-3 border-secondary">
+                                    <th scope="row">Activo : </th>
+
+                                    <td>
+
+                                        <button onclick="desplegar3()" id="btnAlta" style="background-color: #151D21!important; color:#668797" th:text="${session.usuariosession.activo}" class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</button>
+
+                                        <ul id="btnd" class="dropdown-menu">
+                                            <li><a th:href="@{/perfils/modificar-alta/__${session.usuariosession.id}__}" class="dropdown-item">Cambiar Alta/Baja</a></li>
+                                        </ul>
+
+                                    </td>
+                                </tr>      
+                                
+                                <tr sec:authorize="hasAnyRole('PROVEEDOR', 'ADMIN' , 'MODERADOR')" class="border-top-0 border-end-0 border-start-0 border-3 border-secondary">
+
+                                    <th th:text="'Agregar Servicios: '" scope="row"></th>
+
+                                    <!-- Boton crear servicios proveedor -->
+                                    <td >
+                                        <a th:href="@{/registro-servicio/__${session.usuariosession.id}__}" class="btn  btn-secondary"  >
+                                            Registrar un Servicio
+                                        </a>
+                                    </td>
+                                    
+
+                                </tr>
+                                <tr  th:unless="${session.usuariosession.rol == 'USER'}" class="border-top-0 border-end-0 border-start-0 border-3 border-secondary">
+                                    <th th:text="'Lista de Contratos: '" scope="row"></th>
+                                    <!-- Boton crear servicios proveedor -->
+                                    <td >
+                                        <a th:href="@{/servicios-contratados/__${session.usuariosession.id}__}" class="btn  btn-secondary"  >
+                                            Ver servicios contratados
+                                        </a>
+                                    </td>
+                                   
+                                    <td  sec:authorize="hasAnyRole('PROVEEDOR', 'ADMIN' , 'MODERADOR')" >
+                                        <a href="#" class="btn  btn-secondary"  >
+                                            Ver servicios solicitados
+                                        </a>
+                                    </td>
+
+                                </tr>
+
+                               
+
+                            </tbody>
+                        </table>
+
+                        <p class="card-text"><small class="text-body-secondary"></small></p>
+                        <a th:href="@{/perfils/__${session.usuariosession.id}__}" class="btn mt-5 btn-warning" style="--bs-btn-bg: #fad464!important;">Modificar Datos</a>     
+
+
+                        <!-- Button modal eliminar cuenta -->
+                        <button type="button" class="btn mt-4 btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarCuentaDefinitiva" >
+                            Eliminar Foto de Perfil
+                        </button>
+
+                        <!-- Modal  ELIMINAR-->
+                        <div class="modal fade" id="eliminarCuentaDefinitiva" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-warning">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Importante!!!</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-center">
+                                        Estas seguro que deseas eliminar<br>tu foto de perfil? 
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        <a th:href="@{/perfils/emilinar-foto/__${session.usuariosession.id}__}" type="button" class="btn btn-danger">Eliminar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+           
+        </div>
+    </div>
+
+
+
+    <div style="background-color: #151D21!important"  class="card-footer bg-danger ">
+        <p class="fw-semibold " text= "'User Id : '+${usuario.id}" ></p>
+    </div>
+</div>
+</div>
+
+
+<div class="container">
+    <footer th:replace="/fragments/footer :: footer" > </footer>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <title>LISTA USUARIOS</title>
+        <link rel="stylesheet" href="/css/index.css">
+    <div th:replace="/fragments/head :: head"></div>
+</head>
+
+<style th:replace="/fragments/style :: style"></style>
+
+<body style=" background: #F2F2F2">
+
+    <nav th:replace="/fragments/navbar :: nav"></nav>
+
+    <div style="background: #27363D; text-align: center; margin-bottom: -8px;">
+        <h2 style="color: #DFE2F2">Lista Usuarios:</h2>
+    </div>
+    <div style="padding: 0px;" >
+        
+        <!-- Input de busqueda por Js - Nombre o Rol -->
+        <div class="form-floating mb-3">
+            <input style='color:blue!important;text-align: center; font-size:larger; font-weight: 600;' type="text" class="form-control" id="filtro" placeholder="ingrese algo">
+            <label style='font-size: larger; font-weight: 600; color:#27363D; left: 30%;' for="filtro" class="form-label">Filtro Busqueda:  Nombre / Email / Rol / Activos (true - false). </label>
+            
+        </div>
+        
+        <table class="table table-dark" >
+            <thead class="text-center" >
+                <tr >
+                    <th scope="col">Id del Usuario</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>     
+                    <th scope="col">Email</th>
+
+
+                    <th scope="col">Cambiar Rol</th>
+                    <th scope="col">Activo / Eliminar</th>
+                    <th scope="col">Foto de Perfil</th>
+                    <th scope="col">Modificar</th>
+
+
+                </tr>
+            </thead>
+
+            <tbody th:each="usuario : ${usuarios}" class="text-center"> 
+                <tr class="usuario"  >
+                    <th scope="row" th:text="${usuario.id}"></th>
+
+                    <td th:text="${usuario.nombre}"></td>
+                    <td th:text="${usuario.apellido}"></td>  
+
+                    <td th:text="${usuario.email}" class="email" ></td>
+
+
+                    <td>
+                        <button  style="color:#668797" th:text="${usuario.rol}" class="btn btn-outline-secondary dropdown-toggle rol" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</button>
+                        <ul class="dropdown-menu">
+
+                            <li><a th:href= "@{/admin/modificarRolUser/__${usuario.id}__}" class="dropdown-item"> USER</a> </li>
+                            <li><a th:href= "@{/admin/modificarRolCliente/__${usuario.id}__}" class="dropdown-item"> CLIENTE</a> </li>
+                            <li><a th:href= "@{/admin/modificarRolProveedor/__${usuario.id}__}" class="dropdown-item"> PROVEEDOR</a> </li>
+                            <li><a th:href= "@{/admin/modificarRolModerador/__${usuario.id}__}" class="dropdown-item"> MODERADOR</a> </li>
+                            <li><a th:href= "@{/admin/modificarRolAdministrador/__${usuario.id}__}" class="dropdown-item"> ADMIN</a> </li>
+                        </ul>
+                    </td>
+
+                    <td>
+
+                        <a  th:href="@{/admin/Alta/__${usuario.id}__}" th:text="'Activo: '+${usuario.activo}" class="btn btn-outline-secondary activo" >Cambiar Alta/Baja</a>
+
+                        <!--<button type="button" class="btn mt-2 btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"  >ELIMINAR CUENTA</button>-->
+                        <!--    <a th:href="@{/admin/eliminarUsuario/__${usuario.id}__}"><button type="button" class="btn mt-2 btn-outline-danger">ELIMINAR CUENTA</button></a>-->
+
+                        <a th:href="@{/admin/confirmarEliminarUsuario/__${usuario.id}__}"><button type="button" class="btn mt-2 btn-outline-danger">ELIMINAR CUENTA</button></a>
+
+
+                    </td>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-warning">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Importante!!!</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-black">
+                            <p>Esta accion eliminara definitivamente la cuenta de la base de datos. Te recomendamos dar de baja la cuenta.</p>
+                            <a  th:href="@{/admin/Alta/__${usuario.id}__}" th:text="'Activo: '+${usuario.activo}" class="btn btn-outline-secondary " >Cambiar Alta/Baja</a>
+                            <h5>Estas seguro que deseas eliminar esta cuenta ?</h5>
+                            <a th:href="@{/admin/eliminarUsuario/__${usuario.id}__}"><button type="button" class="btn mt-2 btn-outline-danger">ELIMINAR CUENTA</button></a>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <td >
+                <a><img th:if="${usuario.imagen != null}" class="logo" th:src="@{/imagen/perfil/__${usuario.id}__}" ></a>  
+                <a><img th:if="${usuario.imagen == null}" class="logo" th:src="@{/images/perfil.png}" ></a> 
+            </td>
+
+            <td>
+                <a th:href="@{/admin/modificar/__${usuario.id}__}" type="button"  class="icon-link icon-link-hover link-warning link-underline-dark link-underline-opacity-25 fs-2"  ><i class="bi bi-gear-fill"></i></a>
+            </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div th:if="${exito}!=null" class="card text-white bg-success mb-3 mt-3 mensajeExito" >
+            <div class="card-body">
+                <h5 class="card-title">Exito ð</h5>
+                <p class="card-text" th:text="${exito}"></p>
+            </div>
+        </div>
+        <div th:if="${error}!=null" class="card text-white bg-danger mb-3 mensajeError" >
+            <div class="card-body">
+                <h5 class="card-title">Error ð</h5>
+                <p class="card-text" th:text="${error}"></p>
+            </div>
+        </div>
+
+        <section class="py-3 text-center container">
+            <div class="row py-lg-2">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <a style="background-color: #27363D; color:#DFE2F2!important;" th:href="@{/admin/dashboard }" class="btn btn my-2">Volver</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script th:src="@{/js/script-filtro.js}" integrity="" crossorigin="anonymous"></script>
+</body>
+</html>

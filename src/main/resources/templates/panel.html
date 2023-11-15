@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <div th:replace="/fragments/head :: head"></div>
+    <title>Admin DASHBOARD</title>
+</head>
+
+<body style=" background: #F2F2F2">
+<nav th:replace="/fragments/navbar :: nav"></nav>
+
+<style th:replace="/fragments/style :: style"></style>
+
+
+<div class="centered" style = "display: flex ;justify-content: center;align-items: center;">
+  <h2 sec:authorize="hasRole('ADMIN')" th:if="${session.usuariosession != null}">
+    Hola »<span style="color: #7c4819!important; font-family: fangsong;" class="username-color" th:text=" ${session.usuariosession.nombre}"></span>« eres <span style="color: #7c4819!important; font-family: fangsong; font-weight: 700;" th:text=" ${session.usuariosession.Rol}"></span>
+  </h2>
+</div>
+
+<div class="centered">
+    <a th:if="${session.usuariosession.imagen != null}" class="d-flex align-items-center">
+        <img class="logo"  th:src="@{/imagen/perfil/__${session.usuariosession.id}__}" height="120px">
+    </a>
+    <a th:if="${session.usuariosession.imagen == null}" class="d-flex align-items-center">
+        <img class="logo" th:src="@{/images/perfil.png}" height="120px">
+    </a>
+</div>
+
+<br>
+
+<div class="centered"><a href="/logout"><button class="btn btn-secondary botones">Cerrar Sesión</button></a></div>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<nav style="background-color: #151D21!important;" class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+    <div class="container-fluid">
+
+
+        <button onClick="desplegar()" id="navbar-toggler" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div style="margin-right: 50px!important;" class="collapse navbar-collapse" id="navbarColor01">
+
+            <ul class="navbar-nav me-auto">
+                <a style="color: #DFE2F2!important;font-size: x-large;" class="navbar-brand text-black" th:href="@{/}">INICIO</a>
+                <a style="color: #DFE2F2!important;font-size: x-large;" class="navbar-brand text-rojo" th:href="@{/servicios}">SERVICIOS</a>
+                <a style="color: #DFE2F2!important;font-size: x-large;" th:href="@{/registro-servicio/__${session.usuariosession.id}__}" class="navbar-brand text-rojo" sec:authorize="hasAnyRole('PROVEEDOR', 'ADMIN')">REGISTRAR SERVICIO</a>
+                <a style="color: #DFE2F2!important;font-size: x-large;" th:href="@{/admin/dashboard}" class="navbar-brand text-rojo" sec:authorize="hasRole('ADMIN')">DASHBOARD</a>
+                <a style="color: #DFE2F2!important;font-size: x-large;" th:href="@{/admin/usuarios}" class="navbar-brand text-rojo" sec:authorize="hasRole('ADMIN')">LISTA USUARIOS</a>
+            </ul>
+
+            <!-- btn login/registro -->
+            <div th:if="${session.usuariosession == null}" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                <a style="color: #DFE2F2!important;position: relative;" th:href="@{/login}" class="btn btn-outline-success btn-success-bg-subtle me-2">Iniciar Sesión</a>
+            </div>
+            <div th:if="${session.usuariosession == null}" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                <a style="color: #DFE2F2!important;position: relative;"th:href="@{/registrar-usuario}" class="btn btn-outline-success btn-success-bg-subtle me-2">Registrarme</a>
+            </div>
+
+
+            <!-- nombre perfil + foto perfil -->
+            <div class="cabito" style="display: contents;">
+                <h4 style="margin-left: auto; margin-top: 20px; color:#DDE0E7;left: 2px;position: relative;" th:if="${session.usuariosession != null}">
+                    Hola <span style="color:#668797" class="username-color" th:text="${session.usuariosession.nombre}"></span>
+                </h4>
+
+                <div onclick="desplegar2()" id="btnPerfil" th:if="${session.usuariosession != null}" class="dropdown text-end">
+
+                    <a id="perfil_A" th:if="${session.usuariosession.imagen != null}" href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle imagen-header collapse" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img th:src="@{/imagen/perfil/__${session.usuariosession.id}__}" alt="Img logo" class="rounded-circle">
+                    </a>
+                    
+                    <a id="perfil_A" th:if="${session.usuariosession.imagen == null}" href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle imagen-header collapse" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img th:src="@{/images/perfil.png}" alt="Img logo" class="rounded-circle">
+                    </a>
+
+                    <ul id="A_perfil" style="color:#151D21!important;--bs-dropdown-bg: #151D21!important;-bs-dropdown-link-active-bg:red!important;" class="dropdown-menu text-small">
+                        <li><a style="color:#DFE2F2!important;" class="dropdown-item" th:href="@{/perfil/__${session.usuariosession.id}__}">Editar Perfil</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a style="color:#DFE2F2!important;" class="dropdown-item" href="/logout">Cerrar Sesión</a></li>
+                    </ul>
+
+                </div>
+                
+            </div>
+
+        </div>
+    </div>
+</nav>

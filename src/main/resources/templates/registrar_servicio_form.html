@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+    <div th:replace="/fragments/head :: head"></div>
+    <title>REGISTRO SERVICIO</title>
+</head>
+
+<style th:replace="/fragments/style :: style"></style>
+<body style="background-color: #F2F2F2">
+    <nav th:replace="/fragments/navbar :: nav"></nav>
+
+    <br><br>
+<body>
+
+    <div class="row">
+
+        <div class="col"></div>
+        <div class="col-5">
+            <h4>Registra tus servicio, completa los campos del formulario.</h4>
+            <h4 th:text="${session.usuariosession.email}">Registra tus servicio, completa los campos del formulario.</h4>
+
+            <form class="row g-3" th:action="@{/registrar-servicio/__${session.usuariosession.id}__}" method="POST" enctype="multipart/form-data">
+
+                <input hidden th:value="${session.usuariosession.id}" name="idProveedor">
+                
+
+                <div class="form-group my-3">
+                    <select name="categoriaServicio">
+                        <option>Seleccionar Categoria</option>
+                        <option th:each="categoria : ${categorias}"
+                                th:value="${categoria}"
+                                th:text="${categoria.nombre}"/>
+                    </select>
+                </div>
+
+                <div class="col-12">
+                    <label for="descripcionServicio" class="form-label" >Descripcion de Servicio</label>
+                    <textarea name="descripcionServicio" class="form-control" id="descripcionServicio" placeholder="Descripcion de Servicio..."  ></textarea>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="precioServicio" class="form-label">Precio Servicio</label>
+                    <input name="precioServicio" type="number" class="form-control" id="precioServicio" placeholder=" " >
+                </div>
+
+
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Cargar Servicio</button>
+                </div>
+            </form>
+        </div>
+        <div class="col"></div>
+    </div>
+
+
+
+
+
+
+    <div class="container">
+        <footer th:replace="/fragments/footer :: footer" > </footer>
+    </div>
+
+</body>
+</html>

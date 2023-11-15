@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+    <div th:replace="/fragments/head :: head"></div>
+    <title>Servicios Solicitados</title>
+</head>
+
+<style th:replace="/fragments/style :: style"></style>
+<body style="background-color: #F2F2F2">
+    <nav th:replace="/fragments/navbar :: nav"></nav>
+
+    <div>SERVICIOS SOLICITADOS LISTA</div>
+
+    <!-- LISTA DE CONTRATOS O SERVICIOS SOLICITADOS -->
+    <div>
+        <h3>USUARIO!!!  Estos son todos tus contratos </h3>
+        <div th:each="contrato : ${contratos}"   class="row">
+
+            <div class="card w-95 mb-3">
+                <hr>
+                <div class="col-4">Datos de Servicio 
+                    <hr>
+
+                    <p th:text=" 'SERVICIO ID: '+${contrato.id} " ></p>
+                    <p th:text=" 'SERVICIO Precio: $'+${contrato.precio} " ></p>
+                    <p th:text=" 'SERVICIO ESTADO-INICIADO: '+${contrato.contratoIniciado} " ></p>
+                    <p th:text=" 'SERVICIO ESTADO-FINALIZADO: '+${contrato.contratoFinalizado} " ></p>
+                    <p th:text=" 'SERVICIO ESTADO-CANCELADO: '+${contrato.contratoCancelado} " ></p>
+
+                </div>
+                <div class="col-4">Datos Proveedor 
+                    <hr>
+
+                    <p th:text=" 'PROVEEDOR ID: '+${contrato.proveedor.id} " ></p>
+                    <p th:text=" 'PROVEEDOR NOMBRE: '+${contrato.proveedor.nombre} " ></p>
+                    <p th:text=" 'PROVEEDOR APELLIDO: '+${contrato.proveedor.apellido} " ></p>
+                    <p th:text=" 'PROVEEDOR EMAIL: '+${contrato.proveedor.email} " ></p>
+                    <p th:text=" 'PROVEEDOR TELEFONO: '+${contrato.proveedor.telefono} " ></p>
+                    <p th:text=" 'SERVICIO-TIPO: '+${contrato.proveedor.categoriaServicio} " ></p>
+
+                </div>
+                <div class="col-4">Datos Usuario
+                    <hr>
+                    <p th:text=" 'USUARIO ID: '+${contrato.cliente.id} " ></p>
+                    <p th:text=" 'USUARIO NOMBRE: '+${contrato.cliente.nombre} " ></p>
+                    <p th:text=" 'USUARIO APELLIDO: '+${contrato.cliente.apellido} " ></p>
+                    <p th:text=" 'USUARIO TELEFONO: '+${contrato.cliente.telefono} " ></p>
+                </div>
+                
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="container">
+        <footer th:replace="/fragments/footer :: footer" > </footer>
+    </div>
+
+</body>
+</html>

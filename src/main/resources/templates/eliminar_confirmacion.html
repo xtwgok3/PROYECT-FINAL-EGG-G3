@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <title>ELIMINAR USUARIOS</title>
+        <link rel="stylesheet" href="/css/index.css">
+    <div th:replace="/fragments/head :: head"></div>
+</head>
+<style th:replace="/fragments/style :: style"></style>
+<nav th:replace="/fragments/navbar :: nav"></nav>
+<body style=" background: #F2F2F2">
+    <style>
+        body{
+            overflow: hidden;
+        }
+    </style>
+
+    <div style="margin-top: 10px!important;" class="row" >
+        <div class="col"></div>
+        <div class="col-5">
+            <div class="card">
+                
+                <div style="color:white;" class="card-header bg-danger">
+                    USUARIO A ELIMINAR
+                </div>
+                
+                <div class="card-body">
+                    <table style="border-color: inherit!important;border-style: double!important;" class="table">
+                        <tbody>
+
+                            <tr class="border-top-0 border-end-0 border-start-0 border-3 border-secondary">
+                                <th th:text="'Nombre: '+ ${usuario.nombre}" scope="row"></th>
+
+                            </tr>
+
+                            <tr class="border-top-0 border-end-0 border-start-0 border-3 border-secondary">
+                                <th th:text="'Apellido: '+ ${usuario.apellido}" scope="row"></th>
+
+                            </tr>
+
+                            <tr class="border-top-0 border-end-0 border-start-0 border-3 border-secondary">
+                                <th th:text="'Email: '+ ${usuario.email}" scope="row"></th>
+
+                            </tr>
+
+                            <tr class="border-top-0 border-end-0 border-start-0 border-3 border-secondary">
+                                <th th:text="'Rol: '+ ${usuario.rol}" scope="row"></th>
+                            </tr>
+
+                        <td >
+                            <a><img style="width: 30%;margin: auto;border-radius: 20%;margin-left: 32%;" 
+                            th:if="${usuario.imagen != null}" class="logo" th:src="@{/imagen/perfil/__${usuario.id}__}" ></a>  
+                            <a><img style="width: 30%;margin: auto;border-radius: 20%;margin-left: 32%;" th:if="${usuario.imagen == null}" class="logo" th:src="@{/images/perfil.png}" ></a> 
+                        </td>
+                        <h5 style="color:darkred;font-weight: 650!important">¿Estás seguro de que deseas eliminar esta cuenta?</h5>
+
+                        </tbody>
+                    </table>
+
+
+
+                    <a th:href="@{/admin/usuarios}"><button style="background-color: #6c757d!important; color:white;" type="button" class="btn mt-2 btn-outline">CANCELAR</button></a>
+
+                    <a th:href="@{/admin/eliminarUsuario/__${usuario.id}__}"><button style="background-color: #bf1b1b!important; color:white;" type="button" class="btn mt-3 btn-outline-danger">ELIMINAR CUENTA</button></a>
+
+                </div>
+            </div>
+        </div>
+        <div class="col"></div>
+    </div>
+
+
+</body>
+</html>

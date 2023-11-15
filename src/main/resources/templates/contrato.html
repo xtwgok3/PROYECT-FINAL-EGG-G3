@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+    <div th:replace="/fragments/head :: head"></div>
+    <title>CONTRATO</title>
+</head>
+<body>
+
+    <!--<header th:replace="/fragments/header :: header" ></header> -->
+    <nav th:replace="/fragments/navbar :: nav" ></nav>
+
+
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-5">
+            <h3> CONTRATO </h3>
+
+
+            <h3 th:text="'ATENCION!!! '+${session.usuariosession.nombre} "></h3>
+
+
+     
+            <!-- 
+            <h4 >Confirmacion de cita</h4>
+            <p >DATOS CLIENTE</p>
+            <p th:text="'Nombre Cliente :  '+${session.usuariosession.nombre} " >Nombre de Cliente</p>
+            <p th:text="'Cliente id :  '+${session.usuariosession.id} " >Nombre de Cliente</p>
+            <p th:text="'Cliente telefono :  '+${session.usuariosession.telefono} " >Nombre de Cliente</p>
+            <p th:text="'Cliente direccion :  '+${session.usuariosession.direccion} " >Nombre de Cliente</p>
+             -->
+            <hr>
+
+            <p >DATOS SERVICIO</p>
+            <p th:text="'Servicio id :  '+${servicio.id} ">precio del servicio </p>
+            <p >precio del servicio </p>
+            <hr>
+            <p >DATOS PROVEEDOR</p>
+            <p th:text="'Proveedor Nombre :  '+${servicio.proveedor.nombre} ">precio del servicio </p>
+            <p th:text="'Proveedor id :  '+${servicio.proveedor.id} ">precio del servicio </p>
+
+            <form class="row g-3" th:action="@{/cita/{id}}" method="POST" enctype="multipart/form-data">
+
+                
+             <!--   <input type="text" th:value="${servicio.id}" name="idServicio" hidden>  Envia idProveedor -->
+
+                <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label">Cliente Email</label>
+                    <input name="email" th:value="${session.usuariosession.email}" type="email" class="form-control" id="inputEmail4" placeholder="Ej: cliente@mail.com" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="telefono" class="form-label">Cliente Telefono</label>
+                    <input name="telefono" th:value="${session.usuariosession.telefono}" type="text" class="form-control" id="telefono" placeholder="Ej: 1234562233 " required>
+                </div>
+                <div class="col-md-6">
+                    <label for="nombre" class="form-label">Cliente Nombre</label>
+                    <input name="nombre" th:value="${session.usuariosession.nombre}" type="text" class="form-control" id="nombre" placeholder="Ej: Juan " required>
+                </div>
+                <div class="col-md-6">
+                    <label for="apellido" class="form-label">Cliente Apellido</label>
+                    <input name="apellido" th:value="${session.usuariosession.apellido}" type="text" class="form-control" id="apellido" placeholder="Ej: Perez " required>
+                </div>
+                <div class="col-12">
+                    <label for="direccion" class="form-label">Cliente Direccion</label>
+                    <input name="direccion" th:value="${session.usuariosession.direccion}" type="text" class="form-control" id="direccion" placeholder="Ej: Calle 123 Piso 1-E " required>
+                </div>
+
+                
+
+                <input type="text" th:value="${session.usuariosession.id}" name="idCliente" hidden> <!-- Envia idCliente -->
+
+                <input type="text" th:value="${servicio.proveedor.id}" name="idProveedor" hidden> <!-- Envia idProveedor -->
+
+                <input type="text" th:value="${servicio.id}" name="idServicio" hidden > <!-- Envia idServicio -->
+
+                <input type="text" th:value="${servicio.precioServicio}" name="precio" hidden > <!-- Envia precio del servicio -->
+
+
+
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Confirmar Cita</button>
+                    <a href="javascript:history.go(-1)" class="btn btn-secondary">Volver Atrás</a>
+
+                </div>
+            </form>
+
+        </div>
+        <div class="col"></div>
+    </div>
+
+
+    <div class="container">
+        <footer th:replace="/fragments/footer :: footer" > </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+    <div th:replace="/fragments/head :: head"></div>
+    <title>Servicios Contratados</title>
+</head>
+
+<style th:replace="/fragments/style :: style"></style>
+<body style="background-color: #F2F2F2">
+    <nav th:replace="/fragments/navbar :: nav"></nav>
+
+    <div style="background: #27363D; text-align: center; margin-bottom: -5px;">
+        <h2 style="color: #DFE2F2;">SERVICIOS CONTRATADOS:</h2>
+    </div>
+    <!-- LISTA DE CONTRATOS O SERVICIOS CONTRATADOS -->
+    <div class="container ">
+        
+        <div th:each="contrato : ${contratos}" class=" bg-dark" >
+
+            <div class="mb-3  row border border-3 bg-dark">
+                <div class="text-center text-white ">
+                    <h3 th:text="'Contrato de Servicio '+${contrato.proveedor.categoriaServicio}"> </h3>
+                </div>
+
+                <div class="col-4 ">
+
+                    <table  class="table table-dark table-striped text-start">
+                        <thead>
+                            <tr>
+                                <th colspan="3" class="text-center" scope="col">Servicio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Rubro </th>
+                                <td th:text="${contrato.proveedor.categoriaServicio}" colspan="2" ></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Honorarios </th>
+                                <td th:text="'$'+${contrato.precio} "  colspan="2">Larry the Bird</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Descripcion </th>
+                                <td th:text="${contrato.servicio.descripcionServicio}" colspan="2" ></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                    <!--
+                    <p th:text=" 'SERVICIO ID: '+${contrato.id} " ></p>
+                    <p th:text=" 'SERVICIO Precio: $'+${contrato.precio} " ></p>
+                    <p th:text=" 'SERVICIO ESTADO-INICIADO: '+${contrato.contratoIniciado} " ></p>
+                    <p th:text=" 'SERVICIO ESTADO-FINALIZADO: '+${contrato.contratoFinalizado} " ></p>
+                    <p th:text=" 'SERVICIO ESTADO-CANCELADO: '+${contrato.contratoCancelado} " ></p>
+                    <p th:text=" 'SERVICIO DESCRIPCION : '+${contrato.servicio.descripcionServicio} " ></p> 
+                    -->
+                </div>
+                <div class="col-4 ">
+
+                    <table  class="table table-dark table-striped text-start">
+                        <thead>
+                            <tr>
+                                <th colspan="2" class="text-center" scope="col">Proveedor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Nombre </th>
+                                <td th:text="${contrato.proveedor.nombre}" ></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Email </th>
+                                <td th:text="${contrato.proveedor.email}" >Jacob</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Telefono </th>
+                                <td th:text="${contrato.proveedor.telefono} " >Jacob</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+
+                    <!-- 
+
+                    <p th:text=" 'PROVEEDOR ID: '+${contrato.proveedor.id} " ></p>
+                    <p th:text=" 'PROVEEDOR NOMBRE: '+${contrato.proveedor.nombre} " ></p>
+                    <p th:text=" 'PROVEEDOR APELLIDO: '+${contrato.proveedor.apellido} " ></p>
+                    <p th:text=" 'PROVEEDOR EMAIL: '+${contrato.proveedor.email} " ></p>
+                    <p th:text=" 'PROVEEDOR TELEFONO: '+${contrato.proveedor.telefono} " ></p>
+                    <p th:text=" 'SERVICIO-TIPO: '+${contrato.proveedor.categoriaServicio} " ></p>
+                    -->
+                </div>
+                <div class="col-4 ">
+
+
+                    <table class="table table-dark table-striped text-start">
+                        <thead>
+                            <tr>
+                                <th colspan="2" class="text-center" scope="col">Cliente</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Nombre </th>
+                                <td th:text="${contrato.cliente.nombre}" ></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Email </th>
+                                <td th:text="${contrato.cliente.email}" >Jacob</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Telefono </th>
+                                <td th:text="${contrato.cliente.telefono} " >Jacob</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Direccion </th>
+                                <td th:text="${contrato.cliente.direccion} " >Jacob</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+
+
+                    <p class="text-white" th:text=" 'CONTRATO ID: '+${contrato.id} " ></p>
+                    <!--   <p th:text=" 'USUARIO NOMBRE: '+${contrato.cliente.nombre} " ></p>
+                       <p th:text=" 'USUARIO APELLIDO: '+${contrato.cliente.apellido} " ></p>
+                       <p th:text=" 'USUARIO TELEFONO: '+${contrato.cliente.telefono} " ></p>
+                    -->
+                </div>
+                <div class="row mx-auto">
+                    <table class="table table-dark table-striped-columns text-center">
+                        <div class="text-center text-white border-1 border-bottom border-secondary">
+                            <h3 th:text="'Estado del Servicio '+${contrato.proveedor.categoriaServicio}"> </h3>
+                        </div>
+
+
+                        <tbody>
+
+                            <tr>
+                                <th scope="row">Iniciado </th>
+                                <td th:text="${contrato.contratoIniciado}" colspan="2" ></td>
+
+                                <th scope="row">Finalizado </th>
+                                <td th:text="${contrato.contratoFinalizado} " colspan="2" ></td>
+
+                                <th scope="row">Cancelado </th>
+                                <td th:text="${contrato.contratoCancelado} " colspan="3"  ></td>
+
+                            </tr>
+                            <tr>
+                                <th scope="row" colspan="4" >Califica el Servicio </th>
+                                <td ><a href="url">Calificar</a></td>
+
+                                <th scope="row" colspan="4" >Cancela el Servicio </th>
+                                <td ><a th:href="@{/cancelar-contrato/__${contrato.id}__}">Cancelar</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!--  COMENTARIOS DEL PERFIL PROVEEDOR -->
+
+                <div class="row ">
+
+                    <h5 class="text-white" >COMUNICATE CON TU PROVEEDOR </h5>
+                    <hr>
+                </div>  
+                <!-- INGRESAR COMENTARIO -->
+                <div class="row ">
+                    <div class=" mx-auto p-2 ">
+
+                        <div class="card"  th:if="${session.usuariosession != null}" >
+
+                            <form th:action="@{/servicios/comentario/__${contrato.proveedor.id}__}" method="POST" enctype="multipart/form-data" class="fondo">
+                                <input hidden th:value="${session.usuariosession.id}" name="id">
+                                <input hidden th:value="${contrato.proveedor.id}" name="idProveedor">
+                                <input hidden th:value="${contrato.id}" name="idContrato">
+                                <div >
+                                    <textarea class="form-control comentario" id="comentario" name="comentario" rows="3" th:placeholder="${session.usuariosession.email + ', deja aqui tu mensaje para ' + contrato.proveedor.nombre}" required ></textarea>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary ">Comentar</button>
+                            </form>     
+                        </div>
+                        <div class="text-center  " th:if="${session.usuariosession == null}" >
+                            <a th:href="@{/login}" type="button"  class="btn btn-outline-dark btn-warning me-2">Debe estar logueado para porder comentar</a>
+                        </div>
+
+                    </div>
+                </div> 
+                <!-- MOSTRAR COMENTARIOS-- iterar una lista de comentarios ordenados por fecha -->
+                <div class="row ">
+                    <div class=" mx-auto p-2 comentarios-container ">
+
+
+                        <div class="card m-3" th:each="comentario : ${contrato.comentariosServicio}">
+                            <div class="row g-0">
+                                <div class="col-md-4 imagen-comentario">
+                                    <img th:src="@{/imagen/perfil/__${comentario.usuario.id}__}" class="img-fluid rounded-start" alt="usuario-imagen">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-header row">
+                                        <h5 th:utext="${comentario.usuario.nombre}" class="card-title">Nombre del usuario que comenta</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p th:utext="${comentario.comentario}" class="card-text">Comentario texto...</p>
+                                    </div>
+                                    <div class="card-footer row">
+                                        <div class="col-8">
+                                            <p th:utext="${comentario.fecha}" class="card-text"><small class="text-body-secondary">Fecha del comentario</small></p>
+                                        </div>
+                                        <div class="col-4">
+                                            <p th:utext="${comentario.id}" class="card-text"><small class="text-body-secondary">Fecha del comentario</small></p>
+
+
+
+                                            <!--     <a th:href="@{/eliminar-comentario-usuario/__${contrato.id}__}"><small class="text-body-secondary">Eliminar Comentario</small></a>-->
+                                            <!-- <a href="url"><small class="text-body-secondary">Editar Comentario</small></a> -->
+                                        </div>
+                                    </div>
+
+
+                                    <!-- Acordeon -->
+                                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                                        <div class="accordion-item" th:with="comentarioId=${comentario.id}">
+                                            <h2 class="accordion-header">
+                                                <a class="accordion-button collapsed" type="button" data-bs-toggle="collapse" th:data-bs-target="'#flush-collapse_' + ${comentarioId}" aria-expanded="false" th:aria-controls="'flush-collapse_' + ${comentarioId}">
+                                                    Editar Comentario / Eliminar Comentario
+                                                </a>
+                                            </h2>
+                                            <div th:id="'flush-collapse_' + ${comentarioId}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                                <div class="accordion-body">
+                                                    <p th:text="${comentarioId}">COMENTARIO</p>
+                                                    <p th:text="${contrato.id}">CONTRATO</p>
+
+                                                    <form th:action="@{/modificar-comentario-usuario/__${comentario.id}__}" method="POST" enctype="multipart/form-data" class="fondo">
+                                                        <input hidden th:value="${session.usuariosession.id}" name="idUser">
+                                                        <input hidden th:value="${contrato.proveedor.id}" name="idProveedor">
+                                                        <input hidden th:value="${contrato.id}" name="idContrato">
+                                                        <div >
+                                                            <textarea th:value="${comentario.comentario}" class="form-control comentario" id="comentario" name="comentario" rows="3" th:placeholder="${session.usuariosession.email + ', deja aqui tu comentario'}" required ></textarea>
+                                                        </div>
+
+                                                        <button type="submit" class="btn btn-primary ">Editar Comentario</button>
+                                                    </form>
+
+                                                    <form th:action="@{/eliminar-comentario/__${comentario.id}__}" method="post">
+                                                        <input hidden th:value="${session.usuariosession.id}" name="idUser">
+                                                        <input hidden name="idComent" th:value="${comentarioId}">
+                                                        <input hidden name="idContrato" th:value="${contrato.id}">
+
+                                                        <button type="submit" class="btn btn-danger ">Eliminar Comentario</button>
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <footer th:replace="/fragments/footer :: footer" > </footer>
+    </div>
+
+</body>
+</html>

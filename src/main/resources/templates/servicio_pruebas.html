@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+    <div th:replace="/fragments/head :: head"></div>
+    <title>Servicio</title>
+</head>
+<body style=" background: lightgray">
+
+    <!--<header th:replace="/fragments/header :: header" ></header> -->
+    <nav th:replace="/fragments/navbar :: nav" ></nav>
+
+
+
+
+    <main class="container">
+
+        <h3 th:text="${proveedor.nombre}" class="pb-4 mb-4 fst-italic border-bottom text-center">
+            Servicio de tal cosa
+        </h3>
+
+        <div class="row g-5">
+            <div class="col"></div>
+            <div class="col-10">
+
+
+                <article  class="blog-post p-3 m-3 fondo ">
+
+                    <div class="row ">
+                        <div class="col">
+                            <h5 th:text="${proveedor.nombre}"></h5>
+                        </div>
+                        <div class="col">
+                            <h5 th:text="${proveedor.categoriaServicio}"></h5>
+                        </div>
+                        <div class="col">
+                            <small style="margin-left: 10px" th:if="${session.usuariosession == null}" class="text-body-secondary">⭐ ⭐ ⭐ ⭐ ⭐</small>
+                            <small th:if="${session.usuariosession != null}" class="text-body-secondary">⭐ ⭐ ⭐ ⭐ ⭐ Calificacion</small>
+                        </div>
+
+                        <div style="background-color: #e2e3e5" class="row ">
+                            <img style="height: 450px; object-fit: scale-down;"  class="img-fluid " th:src="@{/imagen/perfil/__${proveedor.id}__}" alt="Img Servicio">
+
+
+
+
+
+
+                            <!-- Datos del Proveedor -->
+
+
+                            <table class="table table-secondary  mt-2" >
+                                <tbody>
+
+                                    <tr class="border-top-3 border-end-0 border-start-0 border-3 border-secondary">
+                                        <th  th:text="'Nombre: '+${proveedor.nombre}" scope="row"></th>
+                                        <th th:text="'Telefono: '+${proveedor.telefono}" scope="row"></th>
+
+                                    </tr>
+                                    <tr class="border-top-0 border-end-0 border-start-0 border-3 border-secondary">
+                                        <th th:text="'Email: '+${proveedor.email}" scope="row"></th>
+                                        <th th:text="'Matricula: '+${proveedor.id}" scope="row"></th>
+
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+
+                        <!-- ITERA LA LISTA SERVICIOS DEL PROVEEDOR -->
+                        <h3>Servicios Ofrecidos por este Proveedor</h3>
+                        <div lass="card m-3" th:each="servicio : ${proveedor.servicios}"  >
+                            <hr>
+
+
+                            <div class="card w-90 mb-3">
+                                <div class="card-body">
+                                    <h5 th:text="${servicio.descripcionServicio}"  class="card-title">Card title</h5>
+                                    <p th:text="'Descripcion Servicio : '+${servicio.descripcionServicio}" class="card-text" ></p>
+                                    <p  th:text="'Dato Proveedor : '+${servicio.proveedor.email}" class="card-text" ></p>
+                                    <p th:text="'Servicio ID : '+${servicio.id}" class="card-text" ></p>
+                                    <p  th:text="'Precio Servicio : $'+${servicio.precioServicio}" class="card-text" ></p>
+
+                                    <div th:if="${session.usuariosession.id != servicio.proveedor.id}" >
+
+                                        <a th:text="'Contrata el servico de :  '+${proveedor.nombre}" th:href="@{/cita/__${servicio.id}__}" class="btn btn-secondary">ARREGLAR UNA CITA</a>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            <hr>
+                        </div>
+
+                        <hr>
+                    </div>
+
+
+                    <!-- SECCION COMENTARIOS -->
+
+                    <div class="row ">
+
+                        <h5>COMENTARIOS</h5>
+                        <hr>
+                    </div>  
+                    <!-- INGRESAR COMENTARIO -->
+                    <div class="row ">
+                        <div class=" mx-auto p-2 ">
+
+                            <div class="card"  th:if="${session.usuariosession != null}" >
+
+                                <form th:action="@{/servicios/proveedor/__${proveedor.id}__}" method="POST" enctype="multipart/form-data" class="fondo">
+                                    <input hidden th:value="${session.usuariosession.id}" name="id">
+                                    <input hidden th:value="${proveedor.id}" name="idProveedor">
+                                    <div >
+                                        <textarea class="form-control comentario" id="comentario" name="comentario" rows="3" th:placeholder="${session.usuariosession.email + ', deja aqui tu comentario'}" required ></textarea>
+                                    </div>
+
+                                    <button style="width: 100%" type="submit" class="btn btn-primary ">Comentar</button>
+                                </form>     
+                            </div>
+                            <div class="text-center  " th:if="${session.usuariosession == null}" >
+                                <a th:href="@{/login}" type="button"  class="btn btn-outline-dark btn-warning me-2">Debe estar logueado para porder comentar</a>
+                            </div>
+
+                        </div>
+                    </div> 
+                    <!-- MOSTRAR COMENTARIOS-- iterar una lista de comentarios ordenados por fecha -->
+                    <div class="row ">
+                        <div class=" mx-auto p-2 comentarios-container ">
+
+                            <div class="card m-3" th:each="comentario : ${proveedor.comentarios}" > <!-- ITERAR COMENTARIOS -->
+                                <div class="row g-0  ">
+                                    <div class="col-md-4 imagen-comentario ">
+                                        <img style="height: auto;margin-top: 10px;" th:src="@{/imagen/perfil/__${comentario.usuario.id}__}" class="img-fluid rounded-start" alt="usuario-imagen"> 
+                                    </div>
+                                    <div class="col-md-8 ">
+                                        <div class="card-body ">
+                                            <h5 th:utext="${comentario.usuario.email}"  class="card-title">Card title</h5>
+                                            <p  th:utext="${comentario.comentario}" class="card-text">Esto es una caja de comentarios... </p>
+                                            <p  th:utext="${comentario.fecha}" class="card-text"><small  class="text-body-secondary">Comentado tal FECHA Last updated 3 mins ago</small></p>
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- Acordeon -->
+                                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                                        <div class="accordion-item" >
+                                            <h2 class="accordion-header">
+                                                <a class="accordion-button collapsed" type="button" data-bs-toggle="collapse" th:data-bs-target="'#flush-collapse_' + ${comentario.id}" aria-expanded="false" th:aria-controls="'flush-collapse_' + ${comentario.id}">
+                                                    Editar Comentario / Eliminar Comentario
+                                                </a>
+                                            </h2>
+                                            <div th:id="'flush-collapse_' + ${comentario.id}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                                <div class="accordion-body">
+                                            <!--    <p th:text="${comentario.id}"></p>
+                                                    <p th:text="${proveedor.id}"></p>  -->
+
+                                                    <form th:action="@{/modificar-comentario/__${comentario.id}__}" method="POST" enctype="multipart/form-data" class="fondo">
+                                                        <input hidden th:value="${proveedor.id}" name="idProv">
+                                                        <input hidden th:value="${comentario.id}" name="idComent">
+                                                        <div >
+                                                            <textarea th:value="${comentario.comentario}" class="form-control comentario" id="comentario" name="comentario" rows="3" th:placeholder="${session.usuariosession.nombre + ', deja aqui tu comentario para '+ proveedor.nombre}" required ></textarea>
+                                                        </div>
+
+                                                        <button style="width: -webkit-fill-available;" type="submit" class="btn mt-2 btn-primary ">Editar Comentario</button>
+                                                    </form>
+
+                                                    <form th:action="@{/eliminar-comentario-proveedor/__${comentario.id}__}" method="post">
+                                                        <input hidden name="idComent" th:value="${comentario.id}">
+                                                        <input hidden name="idProv" th:value="${proveedor.id}">
+
+                                                        <button style="width: -webkit-fill-available;" type="submit" class="btn mt-2 btn-danger ">Eliminar Comentario</button>
+                                                    </form>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </article>
+
+            </div>
+
+            <div class="col"></div>
+
+        </div>
+
+
+    </main>
+
+    <div class="container">
+        <footer th:replace="/fragments/footer :: footer" > </footer>
+    </div>
+</body>
+</html>
